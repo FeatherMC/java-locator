@@ -166,7 +166,7 @@ pub fn locate_java_home() -> errors::Result<String> {
         Ok(s) if s.is_empty() => {
             do_locate_java_home()
         }
-        Ok(java_home_env_var) => Ok(java_home_env_var.clone()),
+        Ok(java_home_env_var) => Ok(java_home_env_var.strip_prefix("\"").unwrap_or(java_home_env_var).strip_suffix("\"").unwrap_or(java_home_env_var).to_string()),
         Err(_) => {
             do_locate_java_home()
         }
